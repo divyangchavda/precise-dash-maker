@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +7,7 @@ import Header from "@/components/dashboard/Header";
 import RightSidebar from "@/components/dashboard/RightSidebar";
 
 const ResumeAnalysis = () => {
+  const navigate = useNavigate();
   const score = 68;
   const maxScore = 100;
   const targetScore = 76; // Green Zone threshold
@@ -183,7 +185,10 @@ const ResumeAnalysis = () => {
                   </div>
                 </div>
 
-                <Button className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90">
+                <Button 
+                  className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90"
+                  onClick={() => navigate("/detailed-feedback")}
+                >
                   View Detailed Feedback
                 </Button>
               </div>
