@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ interface UploadModalProps {
 const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
   const [dragActive, setDragActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -38,7 +40,11 @@ const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
 
   const handleFileUpload = (file: File) => {
     console.log("File selected:", file.name);
-    // Handle file upload logic here
+    // Simulate upload process
+    setTimeout(() => {
+      onClose();
+      navigate("/resume-analysis");
+    }, 1000);
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,7 +160,14 @@ const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
                   resume.name.toLowerCase().includes(searchTerm.toLowerCase())
                 )
                 .map((resume, index) => (
-                  <Card key={index} className="p-4 hover:bg-muted/30 cursor-pointer transition-colors">
+                  <Card 
+                    key={index} 
+                    className="p-4 hover:bg-muted/30 cursor-pointer transition-colors"
+                    onClick={() => {
+                      onClose();
+                      navigate("/resume-analysis");
+                    }}
+                  >
                     <div className="grid grid-cols-3 gap-4 items-center">
                       <div className="font-medium text-foreground">{resume.name}</div>
                       <div className="text-sm text-destructive flex items-center">
