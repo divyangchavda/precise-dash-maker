@@ -302,10 +302,205 @@ const DetailedFeedback = () => {
           </TabsContent>
 
           <TabsContent value="system">
-            <Card className="p-8 text-center">
-              <h3 className="text-lg font-semibold mb-2">System Feedback</h3>
-              <p className="text-muted-foreground">Detailed system analysis coming soon...</p>
-            </Card>
+            <div className="grid grid-cols-12 gap-6">
+              {/* Left Sidebar - Feedback Categories */}
+              <div className="col-span-3">
+                <Card className="p-4 bg-gradient-card border-0 shadow-moderate">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg border-l-4 border-primary">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-success rounded-full"></div>
+                        <span className="text-sm font-medium text-foreground">Action Oriented</span>
+                      </div>
+                      <CheckCircle className="h-4 w-4 text-success" />
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg cursor-pointer">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-warning rounded-full"></div>
+                        <span className="text-sm text-foreground">Specifics</span>
+                      </div>
+                      <AlertTriangle className="h-4 w-4 text-warning" />
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg cursor-pointer">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-destructive rounded-full"></div>
+                        <span className="text-sm text-foreground">Overusage</span>
+                      </div>
+                      <XCircle className="h-4 w-4 text-destructive" />
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg cursor-pointer">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-destructive rounded-full"></div>
+                        <span className="text-sm text-foreground">Avoided Words</span>
+                      </div>
+                      <XCircle className="h-4 w-4 text-destructive" />
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              {/* Main Content - Detailed Feedback */}
+              <div className="col-span-6">
+                <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-success/20 rounded-lg flex items-center justify-center">
+                        <CheckCircle className="h-5 w-5 text-success" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">Action Oriented</h3>
+                        <div className="flex items-center space-x-2">
+                          <Badge variant="secondary" className="bg-success/20 text-success border-success/30">
+                            Good Job!
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Feedback Content */}
+                  <div className="space-y-6">
+                    <p className="text-muted-foreground">
+                      You have done a good job of using action-oriented language in your resume
+                    </p>
+
+                    {/* Expandable Section */}
+                    <Card className="border border-muted bg-muted/30">
+                      <div className="p-4">
+                        <div className="flex items-center justify-between cursor-pointer">
+                          <div className="flex items-center space-x-2">
+                            <Target className="h-4 w-4 text-primary" />
+                            <span className="font-medium text-foreground">What is Action-Oriented?</span>
+                          </div>
+                          <span className="text-muted-foreground">+</span>
+                        </div>
+                      </div>
+                    </Card>
+
+                    {/* Additional Info */}
+                    <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-xs font-medium text-primary">!</span>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-foreground mb-1">Click here to see how to create an impact</h4>
+                          <p className="text-sm text-muted-foreground">
+                            Learn best practices for writing impactful, action-oriented content that stands out to recruiters.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              {/* Right Sidebar - Resume Preview */}
+              <div className="col-span-3">
+                <Card className="p-4 bg-gradient-card border-0 shadow-moderate">
+                  <div className="space-y-4">
+                    {/* Resume Score Badge */}
+                    <div className="flex items-center space-x-2 mb-4">
+                      <div className="w-8 h-8 bg-warning rounded-lg flex items-center justify-center">
+                        <span className="text-sm font-bold text-white">68</span>
+                      </div>
+                      <span className="text-sm font-medium text-foreground">Resume Score</span>
+                    </div>
+
+                    {/* Personal Info */}
+                    <div className="text-center space-y-2">
+                      <h3 className="font-bold text-foreground text-lg">Divyang Jitendrabhai Chavda</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        Passionate tech enthusiast with a strong background in software development, website development, and 
+                        AI-powered tools. Skilled in developing robust web platforms and solving real-world problems using open-source 
+                        and cloud technologies.
+                      </p>
+                    </div>
+
+                    {/* Contact Info */}
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-muted-foreground">📧</span>
+                        <span className="text-primary">chavdadivyang7373@gmail.com</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-muted-foreground">📱</span>
+                        <span className="text-foreground">+91 9687131427</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-muted-foreground">📍</span>
+                        <span className="text-foreground">Pune</span>
+                      </div>
+                    </div>
+
+                    {/* Work Experience */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-primary text-sm border-b border-primary/20 pb-1">WORK EXPERIENCE</h4>
+                      
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between items-start mb-1">
+                            <h5 className="font-medium text-foreground text-sm">Sumago Infotech Pvt. Ltd.</h5>
+                            <span className="text-xs text-muted-foreground">Sep,2024 - March,2025</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground mb-2">Software Engineer Trainee</p>
+                          
+                          <div className="space-y-1">
+                            <div className="flex items-start space-x-2">
+                              <CheckCircle className="h-3 w-3 text-success mt-0.5 flex-shrink-0" />
+                              <p className="text-xs text-foreground">Focused on full-stack development using the MERN stack</p>
+                            </div>
+                            <div className="flex items-start space-x-2">
+                              <CheckCircle className="h-3 w-3 text-success mt-0.5 flex-shrink-0" />
+                              <p className="text-xs text-foreground">Gained hands-on experience in designing RESTful APIs</p>
+                            </div>
+                            <div className="flex items-start space-x-2">
+                              <CheckCircle className="h-3 w-3 text-success mt-0.5 flex-shrink-0" />
+                              <p className="text-xs text-foreground">Implemented features like user authentication</p>
+                            </div>
+                            <div className="flex items-start space-x-2">
+                              <AlertTriangle className="h-3 w-3 text-warning mt-0.5 flex-shrink-0" />
+                              <p className="text-xs text-foreground">Followed Agile methodologies for planning</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Education */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-primary text-sm border-b border-primary/20 pb-1">EDUCATION</h4>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h5 className="font-medium text-foreground text-sm">Sri Balaji University, Pune.</h5>
+                              <p className="text-xs text-muted-foreground">Master of Computer Application(MCA) - 8.29 CGPA</p>
+                            </div>
+                            <span className="text-xs text-muted-foreground">July,2023 - May,2025</span>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h5 className="font-medium text-foreground text-sm">Bhagwan Mahavir University, Surat.</h5>
+                              <p className="text-xs text-muted-foreground">Bachelor of Computer Application(BCA) - 8.08 CGPA</p>
+                            </div>
+                            <span className="text-xs text-muted-foreground">August,2020 - June 2023</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="bullet">
