@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Upload, FileText, TrendingUp, Users } from "lucide-react";
+import UploadModal from "./UploadModal";
 
 const MainContent = () => {
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   return (
     <div className="flex-1 p-6 bg-dashboard-bg space-y-6">
       {/* Analytics Chart Card */}
@@ -75,7 +78,10 @@ const MainContent = () => {
           
           <div className="p-8 border-2 border-dashed border-muted-foreground/30 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors">
             <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90 transition-opacity">
+            <Button 
+              className="bg-gradient-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              onClick={() => setIsUploadModalOpen(true)}
+            >
               <Upload className="h-4 w-4 mr-2" />
               Upload Resume (1 left)
             </Button>
@@ -120,6 +126,12 @@ const MainContent = () => {
           </div>
         </Card>
       </div>
+
+      {/* Upload Modal */}
+      <UploadModal 
+        isOpen={isUploadModalOpen} 
+        onClose={() => setIsUploadModalOpen(false)} 
+      />
     </div>
   );
 };
