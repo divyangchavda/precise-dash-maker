@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell, Menu, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
       {/* Left side - Logo and Navigation */}
       <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate("/")}>
           <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">VM</span>
           </div>
@@ -18,10 +21,20 @@ const Header = () => {
 
       {/* Right side - Actions and Profile */}
       <div className="flex items-center space-x-4">
-        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-muted-foreground hover:text-foreground"
+          onClick={() => navigate("/resume-analysis")}
+        >
           Resume
         </Button>
-        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-muted-foreground hover:text-foreground"
+          onClick={() => navigate("/detailed-feedback")}
+        >
           Network Feedback
         </Button>
         
