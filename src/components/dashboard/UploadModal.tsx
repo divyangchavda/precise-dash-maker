@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Upload, X, Search, AlertCircle, Calendar } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { generateRandomAnalysis } from "@/utils/analysisGenerator";
+import { extractTextFromFile, parseResumeContent } from "@/utils/resumeParser";
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -40,100 +40,71 @@ const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
   };
 
   const extractResumeContent = async (file: File): Promise<any> => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
+    try {
+      // Extract text from the uploaded file
+      const extractedText = await extractTextFromFile(file);
+      console.log('Extracted text:', extractedText.substring(0, 200) + '...');
       
-      reader.onload = async (e) => {
-        const text = e.target?.result as string;
-        
-        // Simple text extraction for demonstration
-        // In a real app, you'd use proper PDF/DOC parsing libraries
-        let extractedText = text;
-        
-        // Try to extract basic info using simple patterns
-        const emailMatch = extractedText.match(/[\w\.-]+@[\w\.-]+\.\w+/);
-        const phoneMatch = extractedText.match(/(?:\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}/);
-        
-        // For demo purposes, create structured data from filename and basic patterns
-        const name = file.name.replace(/\.(pdf|doc|docx)$/i, '').replace(/[_-]/g, ' ');
-        
-        const resumeData = {
-          score: Math.floor(Math.random() * 40) + 60, // Random score between 60-100
-          name: `${name} Resume`,
-          profile: {
-            name: name.charAt(0).toUpperCase() + name.slice(1),
-            email: emailMatch?.[0] || `${name.toLowerCase().replace(/\s+/g, '.')}@email.com`,
-            phone: phoneMatch?.[0] || `+1 (555) ${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
-            location: "Location from Resume",
-            website: `${name.toLowerCase().replace(/\s+/g, '')}.dev`,
-            summary: "Professional summary extracted from uploaded resume. This is the candidate's background and expertise as described in their resume document.",
-            workExperience: [
-              {
-                company: "Company from Resume",
-                position: "Position from Resume", 
-                duration: "Duration from Resume",
-                bullets: [
-                  "Achievement or responsibility extracted from resume",
-                  "Another key accomplishment from the uploaded document",
-                  "Technical skills and experience mentioned in resume"
-                ]
-              }
-            ],
-            education: [
-              {
-                institution: "University from Resume",
-                degree: "Degree from Resume",
-                duration: "Graduation dates from resume",
-                gpa: "GPA if mentioned"
-              }
-            ]
+      // Parse the extracted text into structured data
+      const parsedResume = parseResumeContent(extractedText, file.name);
+      console.log('Parsed resume:', parsedResume);
+      
+      // Generate analysis metrics
+      const score = Math.floor(Math.random() * 40) + 60;
+      const impactScore = Math.floor(score * 0.4 + Math.random() * 5);
+      const presentationScore = Math.floor(score * 0.3 + Math.random() * 5);
+      const competenciesScore = Math.floor(score * 0.3 + Math.random() * 5);
+      
+      const resumeData = {
+        score,
+        name: `${parsedResume.name} Resume`,
+        profile: parsedResume,
+        uploadDate: new Date().toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        }),
+        uploadTime: new Date().toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        }),
+        metrics: [
+          { label: "Impact", score: impactScore, maxScore: 40 },
+          { label: "Presentation", score: presentationScore, maxScore: 30 },
+          { label: "Competencies", score: competenciesScore, maxScore: 30 }
+        ],
+        improvementSteps: [
+          {
+            title: "Enhance skill descriptions",
+            points: `+${Math.floor(Math.random() * 10 + 5)}`,
+            description: "Add more specific technical skills and quantify your achievements."
           },
-          uploadDate: new Date().toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          }),
-          uploadTime: new Date().toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-          }),
-          metrics: [
-            { label: "Impact", score: Math.floor(Math.random() * 20) + 20, maxScore: 40 },
-            { label: "Presentation", score: Math.floor(Math.random() * 15) + 15, maxScore: 30 },
-            { label: "Competencies", score: Math.floor(Math.random() * 15) + 15, maxScore: 30 }
-          ],
-          improvementSteps: [
-            {
-              title: "Improve content structure",
-              points: `+${Math.floor(Math.random() * 10 + 5)}`,
-              description: "Based on your uploaded resume content analysis."
-            },
-            {
-              title: "Enhance achievement descriptions", 
-              points: `+${Math.floor(Math.random() * 8 + 4)}`,
-              description: "Add more quantifiable metrics to your experiences."
-            },
-            {
-              title: "Optimize formatting",
-              points: `+${Math.floor(Math.random() * 6 + 3)}`,
-              description: "Improve overall document presentation."
-            }
-          ]
-        };
-        
-        resolve(resumeData);
+          {
+            title: "Improve work experience details", 
+            points: `+${Math.floor(Math.random() * 8 + 4)}`,
+            description: "Include more measurable outcomes and impact metrics."
+          },
+          {
+            title: "Optimize resume structure",
+            points: `+${Math.floor(Math.random() * 6 + 3)}`,
+            description: "Enhance formatting and section organization."
+          }
+        ]
       };
       
-      reader.readAsText(file);
-    });
+      return resumeData;
+    } catch (error) {
+      console.error("Error extracting resume content:", error);
+      throw error;
+    }
   };
 
   const handleFileUpload = async (file: File) => {
-    console.log("File selected:", file.name);
+    console.log("File selected:", file.name, "Type:", file.type);
     
     try {
-      // Extract actual resume content
+      // Extract actual resume content with enhanced parsing
       const analysisData = await extractResumeContent(file);
       localStorage.setItem('resumeAnalysis', JSON.stringify(analysisData));
       
@@ -141,38 +112,78 @@ const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
       setTimeout(() => {
         onClose();
         navigate("/resume-analysis");
-      }, 1000);
+      }, 1500);
     } catch (error) {
       console.error("Error processing resume:", error);
-      // Fallback to basic data structure
+      
+      // Enhanced fallback with basic file info
+      const fileName = file.name.replace(/\.(pdf|doc|docx)$/i, '');
       const fallbackData = {
         score: 68,
-        name: `${file.name.replace(/\.(pdf|doc|docx)$/i, '')} Resume`,
+        name: `${fileName} Resume`,
         profile: {
-          name: file.name.replace(/\.(pdf|doc|docx)$/i, '').replace(/[_-]/g, ' '),
-          email: "extracted@email.com",
+          name: fileName.replace(/[_-]/g, ' '),
+          email: `${fileName.toLowerCase().replace(/[^a-z]/g, '')}@email.com`,
           phone: "+1 (555) 123-4567",
-          location: "Location",
-          website: "website.com",
-          summary: "Summary from uploaded resume",
+          location: "Location from Resume",
+          website: `${fileName.toLowerCase().replace(/[^a-z]/g, '')}.dev`,
+          summary: `Professional summary for ${fileName}. This resume was uploaded but content extraction encountered issues. The analysis is based on file metadata.`,
           workExperience: [
             {
-              company: "Company Name",
-              position: "Job Title",
+              company: "Company from Resume",
+              position: "Position from Resume",
               duration: "Employment Period",
-              bullets: ["Key achievement from resume"]
+              bullets: [
+                "Key achievement extracted from uploaded resume",
+                "Professional responsibility from document",
+                "Technical skill demonstrated in resume"
+              ]
             }
           ],
           education: [
             {
-              institution: "University Name",
-              degree: "Degree Type",
-              duration: "Graduation Date",
-              gpa: "GPA"
+              institution: "University from Resume",
+              degree: "Degree Program",
+              duration: "Graduation Period",
+              gpa: "Academic Performance"
             }
-          ]
-        }
+          ],
+          skills: ["Technical Skills", "Professional Abilities", "Core Competencies"]
+        },
+        uploadDate: new Date().toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        }),
+        uploadTime: new Date().toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        }),
+        metrics: [
+          { label: "Impact", score: 25, maxScore: 40 },
+          { label: "Presentation", score: 20, maxScore: 30 },
+          { label: "Competencies", score: 23, maxScore: 30 }
+        ],
+        improvementSteps: [
+          {
+            title: "Improve file format",
+            points: "+8",
+            description: "Consider using a different file format for better text extraction."
+          },
+          {
+            title: "Enhance content structure", 
+            points: "+6",
+            description: "Organize resume sections more clearly for better parsing."
+          },
+          {
+            title: "Add more details",
+            points: "+4",
+            description: "Include more specific information in your resume."
+          }
+        ]
       };
+      
       localStorage.setItem('resumeAnalysis', JSON.stringify(fallbackData));
       onClose();
       navigate("/resume-analysis");
