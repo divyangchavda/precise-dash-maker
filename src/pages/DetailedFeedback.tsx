@@ -785,18 +785,18 @@ const DetailedFeedback = () => {
                         <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded border">PDF Document</span>
                       </div>
                       
-                      {/* Display resume as PDF or fallback */}
+                      {/* Display original uploaded resume */}
                       {resumeData?.fileUrl ? (
                         <div className="h-full">
                           <iframe 
-                            src={`${resumeData.fileUrl}#toolbar=1&navpanes=1&scrollbar=1`}
+                            src={`${resumeData.fileUrl}#toolbar=1&navpanes=1&scrollbar=1&view=FitH`}
                             className="w-full h-full border-0"
                             title="Resume PDF Preview"
                             style={{ minHeight: '600px' }}
                           />
                         </div>
                       ) : resumeData?.originalContent ? (
-                        <div className="p-4 h-full overflow-y-auto">
+                        <div className="h-full">
                           <embed 
                             src={`data:application/pdf;base64,${resumeData.originalContent}`}
                             type="application/pdf"
@@ -804,80 +804,22 @@ const DetailedFeedback = () => {
                             style={{ minHeight: '600px' }}
                           />
                         </div>
+                      ) : resumeData?.file ? (
+                        <div className="h-full">
+                          <iframe 
+                            src={URL.createObjectURL(resumeData.file)}
+                            className="w-full h-full border-0"
+                            title="Resume Preview"
+                            style={{ minHeight: '600px' }}
+                          />
+                        </div>
                       ) : (
-                        /* Fallback to parsed content if PDF not available */
-                        <div className="p-6 h-full overflow-y-auto">
-                          <div className="flex items-center gap-2 mb-6">
-                            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                              <span className="text-white text-sm font-bold">{resumeData.profile.name.charAt(0)}</span>
-                            </div>
-                            <h2 className="text-xl font-bold text-gray-900">{resumeData.profile.name}</h2>
-                          </div>
-
-                          <p className="text-gray-700 text-sm mb-4 leading-relaxed">
-                            {resumeData.profile.summary}
-                          </p>
-
-                          <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
-                            <div className="flex items-center gap-1">
-                              <Mail className="h-4 w-4 text-primary" />
-                              <span>{resumeData.profile.email}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Phone className="h-4 w-4 text-primary" />
-                              <span>{resumeData.profile.phone}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4 text-primary" />
-                              <span>{resumeData.profile.location}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Globe className="h-4 w-4 text-primary" />
-                              <span>{resumeData.profile.website}</span>
-                            </div>
-                          </div>
-
-                          <div className="mb-6">
-                            <h3 className="text-primary font-semibold text-sm mb-3 border-b border-gray-200 pb-1">WORK EXPERIENCE</h3>
-                            
-                            <div className="space-y-4">
-                              {resumeData.profile.workExperience.map((job, index) => (
-                                <div key={index} className="mb-4">
-                                  <div className="flex justify-between items-start mb-2">
-                                    <div>
-                                      <h4 className="font-semibold text-gray-900">{job.company}</h4>
-                                      <p className="text-gray-700">{job.position}</p>
-                                    </div>
-                                    <span className="text-gray-600 text-sm">{job.duration}</span>
-                                  </div>
-                                  
-                                  <ul className="space-y-2 text-sm text-gray-700">
-                                    {job.bullets.map((bullet, bulletIndex) => (
-                                      <li key={bulletIndex} className="flex items-start gap-2">
-                                        <CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
-                                        <span>{bullet}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
+                        /* No original file available */
+                        <div className="flex items-center justify-center h-full text-center p-6">
                           <div>
-                            <h3 className="text-primary font-semibold text-sm mb-3 border-b border-gray-200 pb-1">EDUCATION</h3>
-                            
-                            <div className="space-y-3">
-                              {resumeData.profile.education.map((edu, index) => (
-                                <div key={index} className="flex justify-between items-start">
-                                  <div>
-                                    <h4 className="font-semibold text-gray-900">{edu.institution}</h4>
-                                    <p className="text-gray-700 text-sm">{edu.degree} - {edu.gpa}</p>
-                                  </div>
-                                  <span className="text-gray-600 text-sm">{edu.duration}</span>
-                                </div>
-                              ))}
-                            </div>
+                            <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                            <h3 className="text-lg font-semibold text-foreground mb-2">Original Resume Not Available</h3>
+                            <p className="text-muted-foreground">The original resume file could not be displayed</p>
                           </div>
                         </div>
                       )}
