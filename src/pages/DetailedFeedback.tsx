@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import { 
   TrendingUp, 
   FileText, 
@@ -21,7 +23,10 @@ import {
   Globe,
   X,
   AlertCircle,
-  ChevronLeft
+  ChevronLeft,
+  Home,
+  Download,
+  Share2
 } from "lucide-react";
 import Header from "@/components/dashboard/Header";
 
@@ -31,6 +36,8 @@ const DetailedFeedback = () => {
   const [selectedPresentationField, setSelectedPresentationField] = useState("Number of Pages");
   const [selectedCompetencyField, setSelectedCompetencyField] = useState("Analytical");
   const [resumeData, setResumeData] = useState(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Load resume analysis data from localStorage
@@ -41,9 +48,14 @@ const DetailedFeedback = () => {
         setResumeData(parsedData);
       } catch (error) {
         console.error('Error parsing resume analysis data:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load resume analysis data",
+          variant: "destructive",
+        });
       }
     }
-  }, []);
+  }, [toast]);
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Good Job!":
@@ -205,6 +217,36 @@ const DetailedFeedback = () => {
     return content[field] || content["Analytical"];
   };
 
+  // Handle navigation and actions
+  const handleBackToDashboard = () => {
+    navigate('/');
+  };
+
+  const handleBackToAnalysis = () => {
+    navigate('/resume-analysis');
+  };
+
+  const handleShareReport = () => {
+    toast({
+      title: "Share Report",
+      description: "Report sharing functionality coming soon!",
+    });
+  };
+
+  const handleDownloadReport = () => {
+    toast({
+      title: "Download Report", 
+      description: "Report download will be available soon!",
+    });
+  };
+
+  const handleSendEmail = () => {
+    toast({
+      title: "Email Report",
+      description: "Email functionality will be implemented soon!",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-dashboard-bg">
       <Header />
@@ -213,16 +255,42 @@ const DetailedFeedback = () => {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-2">
-            <span>Student Dashboard</span>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleBackToDashboard}
+              className="hover:bg-muted p-1 h-auto"
+            >
+              <Home className="h-4 w-4 mr-1" />
+              Student Dashboard
+            </Button>
             <span>|</span>
-            <span>Resume Module</span>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleBackToAnalysis}
+              className="hover:bg-muted p-1 h-auto"
+            >
+              Resume Module
+            </Button>
           </div>
           
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold text-foreground">Resume Feedback</h1>
-            <Button variant="ghost" size="sm">
-              <Send className="h-4 w-4 mr-2" />
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={handleDownloadReport}>
+                <Download className="h-4 w-4 mr-2" />
+                Download
+              </Button>
+              <Button variant="ghost" size="sm" onClick={handleShareReport}>
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+              <Button variant="ghost" size="sm" onClick={handleSendEmail}>
+                <Send className="h-4 w-4 mr-2" />
+                Email
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -394,7 +462,15 @@ const DetailedFeedback = () => {
                     Get personalized feedback and sample suggestions on your Resume
                   </p>
                   
-                  <Button className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 mb-6">
+                  <Button 
+                    className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 mb-6"
+                    onClick={() => {
+                      toast({
+                        title: "Detailed Feedback",
+                        description: "You're already viewing the detailed feedback page!",
+                      });
+                    }}
+                  >
                     View Detailed Feedback
                   </Button>
 
@@ -506,7 +582,15 @@ const DetailedFeedback = () => {
                         {getImpactContent(selectedImpactField).description}
                       </p>
                       
-                      <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
+                      <div 
+                        className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          toast({
+                            title: getImpactContent(selectedImpactField).expandText,
+                            description: "Detailed explanation will be available in a future update.",
+                          });
+                        }}
+                      >
                         <span className="text-sm font-medium text-gray-700">{getImpactContent(selectedImpactField).expandText}</span>
                         <Plus className="h-4 w-4 text-gray-500" />
                       </div>
@@ -554,7 +638,15 @@ const DetailedFeedback = () => {
                         {getPresentationContent(selectedPresentationField).description}
                       </p>
                       
-                      <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
+                      <div 
+                        className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          toast({
+                            title: getPresentationContent(selectedPresentationField).expandText,
+                            description: "Detailed explanation will be available in a future update.",
+                          });
+                        }}
+                      >
                         <span className="text-sm font-medium text-gray-700">{getPresentationContent(selectedPresentationField).expandText}</span>
                         <Plus className="h-4 w-4 text-gray-500" />
                       </div>
@@ -613,7 +705,15 @@ const DetailedFeedback = () => {
                         {getCompetencyContent(selectedCompetencyField).description}
                       </p>
                       
-                      <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100 mb-6">
+                      <div 
+                        className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100 mb-6"
+                        onClick={() => {
+                          toast({
+                            title: getCompetencyContent(selectedCompetencyField).expandText,
+                            description: "Detailed explanation will be available in a future update.",
+                          });
+                        }}
+                      >
                         <span className="text-sm font-medium text-gray-700">{getCompetencyContent(selectedCompetencyField).expandText}</span>
                         <Plus className="h-4 w-4 text-gray-500" />
                       </div>
@@ -727,8 +827,18 @@ const DetailedFeedback = () => {
 
           <TabsContent value="bullet">
             <Card className="p-8 text-center">
-              <h3 className="text-lg font-semibold mb-2">Bullet Level Feedback</h3>
-              <p className="text-muted-foreground">Individual bullet point analysis coming soon...</p>
+              <h3 className="text-lg font-semibold mb-4">Bullet Level Feedback</h3>
+              <p className="text-muted-foreground mb-6">Individual bullet point analysis coming soon...</p>
+              <Button 
+                onClick={() => {
+                  toast({
+                    title: "Coming Soon",
+                    description: "Bullet level feedback feature is under development!",
+                  });
+                }}
+              >
+                Get Notified
+              </Button>
             </Card>
           </TabsContent>
         </Tabs>
