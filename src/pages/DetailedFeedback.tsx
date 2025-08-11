@@ -321,19 +321,19 @@ const DetailedFeedback = () => {
                   </div>
                   
                   <div className="flex gap-8 mt-4">
-                    <div className="text-center">
+                    <div className="text-center cursor-pointer">
                       <div className="text-green-600 text-xl font-bold">28<span className="text-sm text-gray-500">/40</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Impact <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
                     </div>
-                    <div className="text-center">
+                    <div className="text-center cursor-pointer border-b-2 border-black pb-1">
                       <div className="text-green-600 text-xl font-bold">23<span className="text-sm text-gray-500">/30</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Presentation <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
                     </div>
-                    <div className="text-center">
+                    <div className="text-center cursor-pointer">
                       <div className="text-orange-500 text-xl font-bold">17<span className="text-sm text-gray-500">/30</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Competencies <Clock className="h-4 w-4 text-orange-500" />
@@ -344,60 +344,57 @@ const DetailedFeedback = () => {
 
                 <div className="flex gap-4 h-96">
                   {/* Categories Sidebar */}
-                  <div className="w-32 space-y-2">
-                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mb-1">
+                  <div className="w-36 space-y-1">
+                    <div className="flex items-center gap-3 p-2 bg-white border-l-4 border-green-500 cursor-pointer rounded">
+                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                         <CheckCircle className="h-4 w-4 text-green-600" />
                       </div>
-                      <span className="text-xs font-medium">Action Oriented</span>
+                      <span className="text-sm font-medium text-gray-700">Number of Pages</span>
                     </div>
                     
-                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mb-1">
-                        <Clock className="h-4 w-4 text-orange-600" />
+                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <CheckCircle className="h-4 w-4 text-green-600" />
                       </div>
-                      <span className="text-xs font-medium">Specifics</span>
+                      <span className="text-sm font-medium text-gray-700">Essential Sections</span>
                     </div>
                     
-                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mb-1">
+                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
                         <AlertCircle className="h-4 w-4 text-red-600" />
                       </div>
-                      <span className="text-xs font-medium">Overusage</span>
+                      <span className="text-sm font-medium text-gray-700">Overall Format</span>
                     </div>
                     
-                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mb-1">
-                        <X className="h-4 w-4 text-red-600" />
+                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <AlertCircle className="h-4 w-4 text-red-600" />
                       </div>
-                      <span className="text-xs font-medium">Avoided Words</span>
+                      <span className="text-sm font-medium text-gray-700">Section Specific</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <AlertCircle className="h-4 w-4 text-red-600" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">Spell Check</span>
                     </div>
                   </div>
 
                   {/* Feedback Content */}
                   <div className="flex-1 bg-white border rounded-lg p-4">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Zap className="h-4 w-4 text-blue-600" />
-                        <span className="text-blue-800 text-sm">Click here to see how to create an impact</span>
-                      </div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-gray-800">Number of Pages</h3>
+                      <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
                     </div>
-
-                    <div className="mb-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h4 className="font-semibold text-gray-800">Action Oriented</h4>
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Good Job!</span>
-                      </div>
-                      <p className="text-gray-600 text-sm mb-3">
-                        You have done a good job of using action-oriented language in your resume
-                      </p>
-                      
-                      <div className="border border-gray-200 rounded-lg">
-                        <button className="flex items-center justify-between w-full p-3 text-left hover:bg-gray-50">
-                          <span className="font-medium text-gray-700">What is Action-Oriented?</span>
-                          <Plus className="h-4 w-4 text-gray-400" />
-                        </button>
-                      </div>
+                    
+                    <p className="text-gray-600 mb-6">
+                      Your resume meets the standard guidelines for the number of pages.
+                    </p>
+                    
+                    <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
+                      <span className="text-sm font-medium text-gray-700">Deciding the Length of Resume</span>
+                      <Plus className="h-4 w-4 text-gray-500" />
                     </div>
                   </div>
                 </div>
