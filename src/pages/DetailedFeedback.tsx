@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   TrendingUp, 
   FileText, 
@@ -30,6 +30,20 @@ const DetailedFeedback = () => {
   const [selectedImpactField, setSelectedImpactField] = useState("Action Oriented");
   const [selectedPresentationField, setSelectedPresentationField] = useState("Number of Pages");
   const [selectedCompetencyField, setSelectedCompetencyField] = useState("Analytical");
+  const [resumeData, setResumeData] = useState(null);
+
+  useEffect(() => {
+    // Load resume analysis data from localStorage
+    const savedAnalysis = localStorage.getItem('resumeAnalysis');
+    if (savedAnalysis) {
+      try {
+        const parsedData = JSON.parse(savedAnalysis);
+        setResumeData(parsedData);
+      } catch (error) {
+        console.error('Error parsing resume analysis data:', error);
+      }
+    }
+  }, []);
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Good Job!":
@@ -246,7 +260,7 @@ const DetailedFeedback = () => {
                     </div>
                     <div className="text-center">
                       <div className="w-20 h-20 bg-warning rounded-full flex items-center justify-center">
-                        <span className="text-2xl font-bold text-white">68</span>
+                        <span className="text-2xl font-bold text-white">{resumeData?.score || 68}</span>
                       </div>
                       <span className="text-sm text-muted-foreground">/100</span>
                     </div>
@@ -258,8 +272,8 @@ const DetailedFeedback = () => {
                   {/* Impact */}
                   <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
                     <div className="text-center mb-4">
-                      <div className="text-3xl font-bold text-success mb-1">28</div>
-                      <div className="text-sm text-muted-foreground">/40</div>
+                      <div className="text-3xl font-bold text-success mb-1">{resumeData?.metrics?.[0]?.score || 28}</div>
+                      <div className="text-sm text-muted-foreground">/{resumeData?.metrics?.[0]?.maxScore || 40}</div>
                       <h3 className="font-semibold text-foreground mt-2">Impact</h3>
                       <p className="text-xs text-muted-foreground mt-1">
                         Focuses on the quality of content and its impact on recruiters.
@@ -291,8 +305,8 @@ const DetailedFeedback = () => {
                   {/* Presentation */}
                   <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
                     <div className="text-center mb-4">
-                      <div className="text-3xl font-bold text-success mb-1">23</div>
-                      <div className="text-sm text-muted-foreground">/30</div>
+                      <div className="text-3xl font-bold text-success mb-1">{resumeData?.metrics?.[1]?.score || 23}</div>
+                      <div className="text-sm text-muted-foreground">/{resumeData?.metrics?.[1]?.maxScore || 30}</div>
                       <h3 className="font-semibold text-foreground mt-2">Presentation</h3>
                       <p className="text-xs text-muted-foreground mt-1">
                         Focuses on whether your resume is in sync with format requirements.
@@ -324,8 +338,8 @@ const DetailedFeedback = () => {
                   {/* Competencies */}
                   <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
                     <div className="text-center mb-4">
-                      <div className="text-3xl font-bold text-warning mb-1">17</div>
-                      <div className="text-sm text-muted-foreground">/30</div>
+                      <div className="text-3xl font-bold text-warning mb-1">{resumeData?.metrics?.[2]?.score || 17}</div>
+                      <div className="text-sm text-muted-foreground">/{resumeData?.metrics?.[2]?.maxScore || 30}</div>
                       <h3 className="font-semibold text-foreground mt-2">Competencies</h3>
                       <p className="text-xs text-muted-foreground mt-1">
                         Assesses how well you have reflected your 5 core competencies.
@@ -387,7 +401,7 @@ const DetailedFeedback = () => {
                   <div>
                     <h4 className="font-semibold text-primary mb-4">Steps to Improve Your Score</h4>
                     <div className="space-y-4">
-                      {improvementSteps.map((step, index) => (
+                      {(resumeData?.improvementSteps || improvementSteps).map((step, index) => (
                         <div key={index} className="flex items-start space-x-3">
                           <div className="p-2 bg-primary/10 rounded-lg">
                             <TrendingUp className="h-4 w-4 text-primary" />
@@ -416,7 +430,7 @@ const DetailedFeedback = () => {
               <div className="w-1/2 pr-3">
                 <div className="bg-orange-50 p-4 rounded-lg mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="bg-orange-500 text-white rounded-lg px-3 py-1 text-lg font-bold">68</div>
+                    <div className="bg-orange-500 text-white rounded-lg px-3 py-1 text-lg font-bold">{resumeData?.score || 68}</div>
                     <span className="text-gray-700 font-medium">Resume Score</span>
                   </div>
                   
@@ -425,7 +439,7 @@ const DetailedFeedback = () => {
                       className={`text-center cursor-pointer ${activeSystemSection === "impact" ? "border-b-2 border-black pb-1" : ""}`}
                       onClick={() => setActiveSystemSection("impact")}
                     >
-                      <div className="text-green-600 text-xl font-bold">28<span className="text-sm text-gray-500">/40</span></div>
+                      <div className="text-green-600 text-xl font-bold">{resumeData?.metrics?.[0]?.score || 28}<span className="text-sm text-gray-500">/{resumeData?.metrics?.[0]?.maxScore || 40}</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Impact <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
@@ -434,7 +448,7 @@ const DetailedFeedback = () => {
                       className={`text-center cursor-pointer ${activeSystemSection === "presentation" ? "border-b-2 border-black pb-1" : ""}`}
                       onClick={() => setActiveSystemSection("presentation")}
                     >
-                      <div className="text-green-600 text-xl font-bold">23<span className="text-sm text-gray-500">/30</span></div>
+                      <div className="text-green-600 text-xl font-bold">{resumeData?.metrics?.[1]?.score || 23}<span className="text-sm text-gray-500">/{resumeData?.metrics?.[1]?.maxScore || 30}</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Presentation <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
@@ -443,7 +457,7 @@ const DetailedFeedback = () => {
                       className={`text-center cursor-pointer ${activeSystemSection === "competencies" ? "border-b-2 border-black pb-1" : ""}`}
                       onClick={() => setActiveSystemSection("competencies")}
                     >
-                      <div className="text-orange-500 text-xl font-bold">17<span className="text-sm text-gray-500">/30</span></div>
+                      <div className="text-orange-500 text-xl font-bold">{resumeData?.metrics?.[2]?.score || 17}<span className="text-sm text-gray-500">/{resumeData?.metrics?.[2]?.maxScore || 30}</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Competencies <Clock className="h-4 w-4 text-orange-500" />
                       </div>
@@ -626,7 +640,7 @@ const DetailedFeedback = () => {
                     <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
                       <span className="text-white text-sm">i</span>
                     </div>
-                    <h2 className="text-xl font-bold text-gray-900">Divyang Jitendrabhai Chavda</h2>
+                    <h2 className="text-xl font-bold text-gray-900">{resumeData?.name || "Divyang Jitendrabhai Chavda"}</h2>
                   </div>
 
                   <p className="text-gray-700 text-sm mb-4 leading-relaxed">
