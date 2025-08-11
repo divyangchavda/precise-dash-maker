@@ -10,7 +10,16 @@ import {
   CheckCircle,
   AlertTriangle,
   XCircle,
-  Send
+  Send,
+  Zap,
+  Plus,
+  Clock,
+  Mail,
+  Phone,
+  MapPin,
+  Globe,
+  X,
+  AlertCircle
 } from "lucide-react";
 import Header from "@/components/dashboard/Header";
 
@@ -302,203 +311,188 @@ const DetailedFeedback = () => {
           </TabsContent>
 
           <TabsContent value="system">
-            <div className="grid grid-cols-12 gap-6">
-              {/* Left Sidebar - Feedback Categories */}
-              <div className="col-span-3">
-                <Card className="p-4 bg-gradient-card border-0 shadow-moderate">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg border-l-4 border-primary">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-success rounded-full"></div>
-                        <span className="text-sm font-medium text-foreground">Action Oriented</span>
+            <div className="flex h-full">
+              {/* Left 50% - Feedback Interface */}
+              <div className="w-1/2 pr-3">
+                <div className="bg-orange-50 p-4 rounded-lg mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-orange-500 text-white rounded-lg px-3 py-1 text-lg font-bold">68</div>
+                    <span className="text-gray-700 font-medium">Resume Score</span>
+                  </div>
+                  
+                  <div className="flex gap-8 mt-4">
+                    <div className="text-center">
+                      <div className="text-green-600 text-xl font-bold">28<span className="text-sm text-gray-500">/40</span></div>
+                      <div className="text-sm text-gray-600 flex items-center gap-1">
+                        Impact <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
-                      <CheckCircle className="h-4 w-4 text-success" />
                     </div>
-                    
-                    <div className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg cursor-pointer">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-warning rounded-full"></div>
-                        <span className="text-sm text-foreground">Specifics</span>
+                    <div className="text-center">
+                      <div className="text-green-600 text-xl font-bold">23<span className="text-sm text-gray-500">/30</span></div>
+                      <div className="text-sm text-gray-600 flex items-center gap-1">
+                        Presentation <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
-                      <AlertTriangle className="h-4 w-4 text-warning" />
                     </div>
-                    
-                    <div className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg cursor-pointer">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-destructive rounded-full"></div>
-                        <span className="text-sm text-foreground">Overusage</span>
+                    <div className="text-center">
+                      <div className="text-orange-500 text-xl font-bold">17<span className="text-sm text-gray-500">/30</span></div>
+                      <div className="text-sm text-gray-600 flex items-center gap-1">
+                        Competencies <Clock className="h-4 w-4 text-orange-500" />
                       </div>
-                      <XCircle className="h-4 w-4 text-destructive" />
-                    </div>
-                    
-                    <div className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg cursor-pointer">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-destructive rounded-full"></div>
-                        <span className="text-sm text-foreground">Avoided Words</span>
-                      </div>
-                      <XCircle className="h-4 w-4 text-destructive" />
                     </div>
                   </div>
-                </Card>
-              </div>
+                </div>
 
-              {/* Main Content - Detailed Feedback */}
-              <div className="col-span-6">
-                <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-success/20 rounded-lg flex items-center justify-center">
-                        <CheckCircle className="h-5 w-5 text-success" />
+                <div className="flex gap-4 h-96">
+                  {/* Categories Sidebar */}
+                  <div className="w-32 space-y-2">
+                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mb-1">
+                        <CheckCircle className="h-4 w-4 text-green-600" />
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">Action Oriented</h3>
-                        <div className="flex items-center space-x-2">
-                          <Badge variant="secondary" className="bg-success/20 text-success border-success/30">
-                            Good Job!
-                          </Badge>
-                        </div>
+                      <span className="text-xs font-medium">Action Oriented</span>
+                    </div>
+                    
+                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mb-1">
+                        <Clock className="h-4 w-4 text-orange-600" />
                       </div>
+                      <span className="text-xs font-medium">Specifics</span>
+                    </div>
+                    
+                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mb-1">
+                        <AlertCircle className="h-4 w-4 text-red-600" />
+                      </div>
+                      <span className="text-xs font-medium">Overusage</span>
+                    </div>
+                    
+                    <div className="flex flex-col items-center p-2 text-center cursor-pointer hover:bg-gray-50 rounded">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mb-1">
+                        <X className="h-4 w-4 text-red-600" />
+                      </div>
+                      <span className="text-xs font-medium">Avoided Words</span>
                     </div>
                   </div>
 
                   {/* Feedback Content */}
-                  <div className="space-y-6">
-                    <p className="text-muted-foreground">
-                      You have done a good job of using action-oriented language in your resume
-                    </p>
-
-                    {/* Expandable Section */}
-                    <Card className="border border-muted bg-muted/30">
-                      <div className="p-4">
-                        <div className="flex items-center justify-between cursor-pointer">
-                          <div className="flex items-center space-x-2">
-                            <Target className="h-4 w-4 text-primary" />
-                            <span className="font-medium text-foreground">What is Action-Oriented?</span>
-                          </div>
-                          <span className="text-muted-foreground">+</span>
-                        </div>
+                  <div className="flex-1 bg-white border rounded-lg p-4">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Zap className="h-4 w-4 text-blue-600" />
+                        <span className="text-blue-800 text-sm">Click here to see how to create an impact</span>
                       </div>
-                    </Card>
+                    </div>
 
-                    {/* Additional Info */}
-                    <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-xs font-medium text-primary">!</span>
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-foreground mb-1">Click here to see how to create an impact</h4>
-                          <p className="text-sm text-muted-foreground">
-                            Learn best practices for writing impactful, action-oriented content that stands out to recruiters.
-                          </p>
-                        </div>
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h4 className="font-semibold text-gray-800">Action Oriented</h4>
+                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Good Job!</span>
+                      </div>
+                      <p className="text-gray-600 text-sm mb-3">
+                        You have done a good job of using action-oriented language in your resume
+                      </p>
+                      
+                      <div className="border border-gray-200 rounded-lg">
+                        <button className="flex items-center justify-between w-full p-3 text-left hover:bg-gray-50">
+                          <span className="font-medium text-gray-700">What is Action-Oriented?</span>
+                          <Plus className="h-4 w-4 text-gray-400" />
+                        </button>
                       </div>
                     </div>
                   </div>
-                </Card>
+                </div>
               </div>
 
-              {/* Right Sidebar - Resume Preview */}
-              <div className="col-span-3">
-                <Card className="p-4 bg-gradient-card border-0 shadow-moderate">
-                  <div className="space-y-4">
-                    {/* Resume Score Badge */}
-                    <div className="flex items-center space-x-2 mb-4">
-                      <div className="w-8 h-8 bg-warning rounded-lg flex items-center justify-center">
-                        <span className="text-sm font-bold text-white">68</span>
-                      </div>
-                      <span className="text-sm font-medium text-foreground">Resume Score</span>
+              {/* Right 50% - Resume Preview */}
+              <div className="w-1/2 pl-3">
+                <div className="bg-white border rounded-lg h-full p-6 overflow-y-auto">
+                  <div className="flex items-center gap-2 mb-6">
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm">i</span>
                     </div>
+                    <h2 className="text-xl font-bold text-gray-900">Divyang Jitendrabhai Chavda</h2>
+                  </div>
 
-                    {/* Personal Info */}
-                    <div className="text-center space-y-2">
-                      <h3 className="font-bold text-foreground text-lg">Divyang Jitendrabhai Chavda</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        Passionate tech enthusiast with a strong background in software development, website development, and 
-                        AI-powered tools. Skilled in developing robust web platforms and solving real-world problems using open-source 
-                        and cloud technologies.
-                      </p>
+                  <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                    Passionate tech enthusiast with a strong background in software development, website development, and 
+                    AI-powered tools. Skilled in developing robust web platforms and solving real-world problems using open-source 
+                    and cloud technologies. Always eager to learn, experiment, and stay ahead in the evolving tech landscape.
+                  </p>
+
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+                    <div className="flex items-center gap-1">
+                      <Mail className="h-4 w-4 text-blue-500" />
+                      <span>chavdadivyang7373@gmail.com</span>
                     </div>
-
-                    {/* Contact Info */}
-                    <div className="space-y-2 text-xs">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-muted-foreground">📧</span>
-                        <span className="text-primary">chavdadivyang7373@gmail.com</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-muted-foreground">📱</span>
-                        <span className="text-foreground">+91 9687131427</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-muted-foreground">📍</span>
-                        <span className="text-foreground">Pune</span>
-                      </div>
+                    <div className="flex items-center gap-1">
+                      <Phone className="h-4 w-4 text-blue-500" />
+                      <span>+91 9687131427</span>
                     </div>
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-4 w-4 text-blue-500" />
+                      <span>Pune</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Globe className="h-4 w-4 text-blue-500" />
+                      <span>divyangchavda</span>
+                    </div>
+                  </div>
 
-                    {/* Work Experience */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-primary text-sm border-b border-primary/20 pb-1">WORK EXPERIENCE</h4>
+                  <div className="mb-6">
+                    <h3 className="text-blue-500 font-semibold text-sm mb-3 border-b border-gray-200 pb-1">WORK EXPERIENCE</h3>
+                    
+                    <div className="mb-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h4 className="font-semibold text-gray-900">Sumago Infotech Pvt. Ltd.</h4>
+                          <p className="text-gray-700">Software Engineer Trainee</p>
+                        </div>
+                        <span className="text-gray-600 text-sm">Sep,2024 - March,2025</span>
+                      </div>
                       
-                      <div className="space-y-3">
-                        <div>
-                          <div className="flex justify-between items-start mb-1">
-                            <h5 className="font-medium text-foreground text-sm">Sumago Infotech Pvt. Ltd.</h5>
-                            <span className="text-xs text-muted-foreground">Sep,2024 - March,2025</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground mb-2">Software Engineer Trainee</p>
-                          
-                          <div className="space-y-1">
-                            <div className="flex items-start space-x-2">
-                              <CheckCircle className="h-3 w-3 text-success mt-0.5 flex-shrink-0" />
-                              <p className="text-xs text-foreground">Focused on full-stack development using the MERN stack</p>
-                            </div>
-                            <div className="flex items-start space-x-2">
-                              <CheckCircle className="h-3 w-3 text-success mt-0.5 flex-shrink-0" />
-                              <p className="text-xs text-foreground">Gained hands-on experience in designing RESTful APIs</p>
-                            </div>
-                            <div className="flex items-start space-x-2">
-                              <CheckCircle className="h-3 w-3 text-success mt-0.5 flex-shrink-0" />
-                              <p className="text-xs text-foreground">Implemented features like user authentication</p>
-                            </div>
-                            <div className="flex items-start space-x-2">
-                              <AlertTriangle className="h-3 w-3 text-warning mt-0.5 flex-shrink-0" />
-                              <p className="text-xs text-foreground">Followed Agile methodologies for planning</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span>Focused on full-stack development using the MERN stack, including frontend interfaces with React.js and backend services with Node.js and Express.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span>Gained hands-on experience in designing RESTful APIs, integrating MongoDB databases, and deploying applications on cloud platforms.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span>Implemented features like user authentication, role-based access, and responsive UI components aligned with modern development standards.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Clock className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                          <span><span className="bg-orange-100 px-1">Followed</span> Agile methodologies for planning and task management, ensuring consistent progress and code quality throughout the internship.</span>
+                        </li>
+                      </ul>
                     </div>
+                  </div>
 
-                    {/* Education */}
+                  <div>
+                    <h3 className="text-blue-500 font-semibold text-sm mb-3 border-b border-gray-200 pb-1">EDUCATION</h3>
+                    
                     <div className="space-y-3">
-                      <h4 className="font-semibold text-primary text-sm border-b border-primary/20 pb-1">EDUCATION</h4>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-semibold text-gray-900">Sri Balaji University, Pune.</h4>
+                          <p className="text-gray-700 text-sm">Master of Computer Application(MCA) – 8.29 CGPA</p>
+                        </div>
+                        <span className="text-gray-600 text-sm">July,2023 - May,2025</span>
+                      </div>
                       
-                      <div className="space-y-2">
+                      <div className="flex justify-between items-start">
                         <div>
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h5 className="font-medium text-foreground text-sm">Sri Balaji University, Pune.</h5>
-                              <p className="text-xs text-muted-foreground">Master of Computer Application(MCA) - 8.29 CGPA</p>
-                            </div>
-                            <span className="text-xs text-muted-foreground">July,2023 - May,2025</span>
-                          </div>
+                          <h4 className="font-semibold text-gray-900">Bhagwan Mahavir University, Surat.</h4>
+                          <p className="text-gray-700 text-sm">Bachelor of Computer Application(BCA) - 8.08 CGPA</p>
                         </div>
-                        
-                        <div>
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h5 className="font-medium text-foreground text-sm">Bhagwan Mahavir University, Surat.</h5>
-                              <p className="text-xs text-muted-foreground">Bachelor of Computer Application(BCA) - 8.08 CGPA</p>
-                            </div>
-                            <span className="text-xs text-muted-foreground">August,2020 - June 2023</span>
-                          </div>
-                        </div>
+                        <span className="text-gray-600 text-sm">August,2020 - June 2023</span>
                       </div>
                     </div>
                   </div>
-                </Card>
+                </div>
               </div>
             </div>
           </TabsContent>
