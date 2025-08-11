@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
 import { 
   TrendingUp, 
   FileText, 
@@ -19,11 +20,13 @@ import {
   MapPin,
   Globe,
   X,
-  AlertCircle
+  AlertCircle,
+  ChevronLeft
 } from "lucide-react";
 import Header from "@/components/dashboard/Header";
 
 const DetailedFeedback = () => {
+  const [activeSystemSection, setActiveSystemSection] = useState("presentation");
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Good Job!":
@@ -321,19 +324,28 @@ const DetailedFeedback = () => {
                   </div>
                   
                   <div className="flex gap-8 mt-4">
-                    <div className="text-center cursor-pointer">
+                    <div 
+                      className={`text-center cursor-pointer ${activeSystemSection === "impact" ? "border-b-2 border-black pb-1" : ""}`}
+                      onClick={() => setActiveSystemSection("impact")}
+                    >
                       <div className="text-green-600 text-xl font-bold">28<span className="text-sm text-gray-500">/40</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Impact <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
                     </div>
-                    <div className="text-center cursor-pointer border-b-2 border-black pb-1">
+                    <div 
+                      className={`text-center cursor-pointer ${activeSystemSection === "presentation" ? "border-b-2 border-black pb-1" : ""}`}
+                      onClick={() => setActiveSystemSection("presentation")}
+                    >
                       <div className="text-green-600 text-xl font-bold">23<span className="text-sm text-gray-500">/30</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Presentation <CheckCircle className="h-4 w-4 text-green-500" />
                       </div>
                     </div>
-                    <div className="text-center cursor-pointer">
+                    <div 
+                      className={`text-center cursor-pointer ${activeSystemSection === "competencies" ? "border-b-2 border-black pb-1" : ""}`}
+                      onClick={() => setActiveSystemSection("competencies")}
+                    >
                       <div className="text-orange-500 text-xl font-bold">17<span className="text-sm text-gray-500">/30</span></div>
                       <div className="text-sm text-gray-600 flex items-center gap-1">
                         Competencies <Clock className="h-4 w-4 text-orange-500" />
@@ -342,62 +354,130 @@ const DetailedFeedback = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-4 h-96">
-                  {/* Categories Sidebar */}
-                  <div className="w-36 space-y-1">
-                    <div className="flex items-center gap-3 p-2 bg-white border-l-4 border-green-500 cursor-pointer rounded">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">Number of Pages</span>
+                {/* Dynamic Content based on active section */}
+                {activeSystemSection === "impact" && (
+                  <div className="flex gap-4 h-96">
+                    {/* Categories Sidebar */}
+                    <div className="w-36 space-y-1">
+                      {impactMetrics.map((metric, index) => (
+                        <div key={index} className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
+                          <div className={`w-8 h-8 ${metric.status === "Good Job!" ? "bg-green-100" : "bg-red-100"} rounded-full flex items-center justify-center`}>
+                            {metric.status === "Good Job!" ? 
+                              <CheckCircle className="h-4 w-4 text-green-600" /> : 
+                              <AlertCircle className="h-4 w-4 text-red-600" />
+                            }
+                          </div>
+                          <span className="text-sm font-medium text-gray-700">{metric.title}</span>
+                        </div>
+                      ))}
                     </div>
-                    
-                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">Essential Sections</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <AlertCircle className="h-4 w-4 text-red-600" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">Overall Format</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <AlertCircle className="h-4 w-4 text-red-600" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">Section Specific</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
-                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <AlertCircle className="h-4 w-4 text-red-600" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">Spell Check</span>
-                    </div>
-                  </div>
 
-                  {/* Feedback Content */}
-                  <div className="flex-1 bg-white border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-800">Number of Pages</h3>
-                      <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
-                    </div>
-                    
-                    <p className="text-gray-600 mb-6">
-                      Your resume meets the standard guidelines for the number of pages.
-                    </p>
-                    
-                    <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
-                      <span className="text-sm font-medium text-gray-700">Deciding the Length of Resume</span>
-                      <Plus className="h-4 w-4 text-gray-500" />
+                    {/* Feedback Content */}
+                    <div className="flex-1 bg-white border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold text-gray-800">Action Oriented</h3>
+                        <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
+                      </div>
+                      
+                      <p className="text-gray-600 mb-6">
+                        Your resume demonstrates strong action-oriented language and impactful content.
+                      </p>
+                      
+                      <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
+                        <span className="text-sm font-medium text-gray-700">What are Action Oriented Words?</span>
+                        <Plus className="h-4 w-4 text-gray-500" />
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {activeSystemSection === "presentation" && (
+                  <div className="flex gap-4 h-96">
+                    {/* Categories Sidebar */}
+                    <div className="w-36 space-y-1">
+                      {presentationMetrics.map((metric, index) => (
+                        <div key={index} className={`flex items-center gap-3 p-2 cursor-pointer rounded ${index === 0 ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"}`}>
+                          <div className={`w-8 h-8 ${metric.status === "Good Job!" ? "bg-green-100" : "bg-red-100"} rounded-full flex items-center justify-center`}>
+                            {metric.status === "Good Job!" ? 
+                              <CheckCircle className="h-4 w-4 text-green-600" /> : 
+                              <AlertCircle className="h-4 w-4 text-red-600" />
+                            }
+                          </div>
+                          <span className="text-sm font-medium text-gray-700">{metric.title}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Feedback Content */}
+                    <div className="flex-1 bg-white border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold text-gray-800">Number of Pages</h3>
+                        <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
+                      </div>
+                      
+                      <p className="text-gray-600 mb-6">
+                        Your resume meets the standard guidelines for the number of pages.
+                      </p>
+                      
+                      <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
+                        <span className="text-sm font-medium text-gray-700">Deciding the Length of Resume</span>
+                        <Plus className="h-4 w-4 text-gray-500" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSystemSection === "competencies" && (
+                  <div className="flex gap-4 h-96">
+                    {/* Categories Sidebar */}
+                    <div className="w-36 space-y-1">
+                      {competencyMetrics.map((metric, index) => (
+                        <div key={index} className={`flex items-center gap-3 p-2 cursor-pointer rounded ${index === 0 ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"}`}>
+                          <div className={`w-8 h-8 ${index === 0 ? "bg-green-100" : "bg-orange-100"} rounded-full flex items-center justify-center`}>
+                            {index === 0 ? 
+                              <CheckCircle className="h-4 w-4 text-green-600" /> : 
+                              <Clock className="h-4 w-4 text-orange-600" />
+                            }
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-gray-700">{metric.title}</span>
+                            {index !== 0 && <Clock className="h-3 w-3 text-orange-500" />}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Feedback Content */}
+                    <div className="flex-1 bg-white border rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-4">
+                        <ChevronLeft className="h-4 w-4 text-gray-400" />
+                        <h3 className="text-lg font-semibold text-gray-800">Analytical Skills</h3>
+                        <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
+                      </div>
+                      
+                      <p className="text-gray-600 mb-6">
+                        You are doing a great job reflecting your analytical skills!
+                      </p>
+                      
+                      <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100 mb-6">
+                        <span className="text-sm font-medium text-gray-700">What are Analytical Skills?</span>
+                        <Plus className="h-4 w-4 text-gray-500" />
+                      </div>
+
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-800 mb-3">Experiences you can consider</h4>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Application Framework</span>
+                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Server Design</span>
+                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Product Control</span>
+                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Product Strategies</span>
+                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Web Application</span>
+                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Wireframing</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Right 50% - Resume Preview */}
