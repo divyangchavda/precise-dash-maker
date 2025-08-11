@@ -777,30 +777,36 @@ const DetailedFeedback = () => {
 
               {/* Right 50% - Resume Preview */}
               <div className="w-1/2 pl-3">
-                <div className="bg-white border rounded-lg h-full p-6 overflow-y-auto">
-                  {resumeData?.originalContent || resumeData?.profile ? (
+                <div className="bg-white border rounded-lg h-full p-0 overflow-hidden">
+                  {resumeData?.fileUrl || resumeData?.originalContent || resumeData?.profile ? (
                     <>
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between p-4 border-b bg-gray-50">
                         <h3 className="text-lg font-semibold text-gray-900">Original Resume</h3>
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Complete Document</span>
+                        <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded border">PDF Document</span>
                       </div>
                       
-                      {/* Display original resume content */}
-                      {resumeData?.originalContent ? (
-                        <div className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed font-mono">
-                          {resumeData.originalContent}
-                        </div>
-                      ) : resumeData?.fileUrl ? (
+                      {/* Display resume as PDF or fallback */}
+                      {resumeData?.fileUrl ? (
                         <div className="h-full">
                           <iframe 
-                            src={resumeData.fileUrl} 
-                            className="w-full h-full border-0 rounded"
-                            title="Resume Preview"
+                            src={`${resumeData.fileUrl}#toolbar=1&navpanes=1&scrollbar=1`}
+                            className="w-full h-full border-0"
+                            title="Resume PDF Preview"
+                            style={{ minHeight: '600px' }}
+                          />
+                        </div>
+                      ) : resumeData?.originalContent ? (
+                        <div className="p-4 h-full overflow-y-auto">
+                          <embed 
+                            src={`data:application/pdf;base64,${resumeData.originalContent}`}
+                            type="application/pdf"
+                            className="w-full h-full"
+                            style={{ minHeight: '600px' }}
                           />
                         </div>
                       ) : (
-                        /* Fallback to parsed content if original not available */
-                        <>
+                        /* Fallback to parsed content if PDF not available */
+                        <div className="p-6 h-full overflow-y-auto">
                           <div className="flex items-center gap-2 mb-6">
                             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                               <span className="text-white text-sm font-bold">{resumeData.profile.name.charAt(0)}</span>
@@ -873,15 +879,15 @@ const DetailedFeedback = () => {
                               ))}
                             </div>
                           </div>
-                        </>
+                        </div>
                       )}
                     </>
                   ) : (
-                    <div className="flex items-center justify-center h-full text-center">
+                    <div className="flex items-center justify-center h-full text-center p-6">
                       <div>
                         <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                         <h3 className="text-lg font-semibold text-foreground mb-2">No Resume Uploaded</h3>
-                        <p className="text-muted-foreground">Upload a resume to see the preview here</p>
+                        <p className="text-muted-foreground">Upload a resume to see the PDF preview here</p>
                       </div>
                     </div>
                   )}
