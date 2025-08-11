@@ -85,7 +85,7 @@ const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
           {/* Upload Area */}
           <div className="space-y-4">
             <div
-              className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
+              className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors cursor-pointer ${
                 dragActive
                   ? "border-primary bg-primary/5"
                   : "border-muted-foreground/30 hover:border-primary/50"
@@ -94,26 +94,28 @@ const UploadModal = ({ isOpen, onClose }: UploadModalProps) => {
               onDragLeave={handleDrag}
               onDragOver={handleDrag}
               onDrop={handleDrop}
+              onClick={() => document.getElementById('file-upload')?.click()}
             >
-              <div className="space-y-4">
-                <p className="text-lg text-muted-foreground">Drop your PDF file here</p>
+              <div className="space-y-4 pointer-events-none">
+                <Upload className="h-12 w-12 mx-auto text-muted-foreground" />
+                <p className="text-lg text-muted-foreground">Drop your resume file here</p>
                 
                 <div className="text-muted-foreground">or</div>
                 
                 <div className="space-y-3">
                   <input
                     type="file"
-                    accept=".pdf"
+                    accept=".pdf,.doc,.docx"
                     onChange={handleFileSelect}
                     className="hidden"
                     id="file-upload"
                   />
-                  <label htmlFor="file-upload">
+                  <div className="pointer-events-auto">
                     <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90 cursor-pointer">
                       <Upload className="h-4 w-4 mr-2" />
                       Choose a File
                     </Button>
-                  </label>
+                  </div>
                   
                   <div className="border border-dashed border-muted-foreground/30 rounded px-3 py-1 inline-block">
                     <span className="text-lg font-semibold text-foreground">5</span>
