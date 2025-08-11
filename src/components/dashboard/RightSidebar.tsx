@@ -4,7 +4,7 @@ import { FileText, Upload, BarChart3, TrendingUp, Users, Target, Calendar, Alert
 
 const RightSidebar = () => {
   return (
-    <div className="w-80 bg-dashboard-sidebar p-6 space-y-6">
+    <div className="w-full xl:w-80 bg-dashboard-sidebar p-4 xl:p-6 space-y-4 xl:space-y-6">
       {/* Steps to Follow */}
       <Card className="p-6 bg-gradient-card border-0 shadow-soft">
         <h3 className="font-semibold text-foreground mb-4 flex items-center">

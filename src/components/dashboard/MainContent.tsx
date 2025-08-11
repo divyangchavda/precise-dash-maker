@@ -8,7 +8,7 @@ import UploadModal from "./UploadModal";
 const MainContent = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   return (
-    <div className="flex-1 p-6 bg-dashboard-bg space-y-6">
+    <div className="flex-1 p-4 lg:p-6 bg-dashboard-bg space-y-4 lg:space-y-6">
       {/* Analytics Chart Card */}
       <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
         <div className="flex items-center justify-between mb-6">
@@ -16,7 +16,7 @@ const MainContent = () => {
           <div className="text-sm text-muted-foreground">Most commonly used methodical skills</div>
         </div>
         
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           <div className="text-center space-y-2">
             <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
               <span className="text-primary font-bold">72%</span>
@@ -101,7 +101,7 @@ const MainContent = () => {
       </Card>
 
       {/* Bottom Insights Row */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         <Card className="p-6 bg-gradient-card border-0 shadow-moderate">
           <div className="flex items-start space-x-4">
             <div className="p-3 bg-success/10 rounded-lg">

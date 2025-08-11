@@ -3,7 +3,7 @@ import { FileText, TrendingUp, Users, Target } from "lucide-react";
 
 const Sidebar = () => {
   return (
-    <div className="w-80 bg-dashboard-sidebar p-6 space-y-6">
+    <div className="w-full lg:w-80 bg-dashboard-sidebar p-4 lg:p-6 space-y-4 lg:space-y-6">
       {/* Best Practices Section */}
       <Card className="p-6 bg-gradient-card border-0 shadow-soft">
         <div className="space-y-4">

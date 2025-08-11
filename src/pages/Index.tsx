@@ -7,10 +7,15 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-dashboard-bg">
       <Header />
-      <div className="flex">
-        <Sidebar />
+      <div className="flex flex-col lg:flex-row">
+        {/* Desktop sidebars */}
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
         <MainContent />
-        <RightSidebar />
+        <div className="hidden xl:block">
+          <RightSidebar />
+        </div>
       </div>
     </div>
   );
