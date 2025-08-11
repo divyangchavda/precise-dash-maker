@@ -27,6 +27,9 @@ import Header from "@/components/dashboard/Header";
 
 const DetailedFeedback = () => {
   const [activeSystemSection, setActiveSystemSection] = useState("presentation");
+  const [selectedImpactField, setSelectedImpactField] = useState("Action Oriented");
+  const [selectedPresentationField, setSelectedPresentationField] = useState("Number of Pages");
+  const [selectedCompetencyField, setSelectedCompetencyField] = useState("Analytical");
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Good Job!":
@@ -93,6 +96,100 @@ const DetailedFeedback = () => {
       description: "Correct overall format for better readability."
     }
   ];
+
+  // Dynamic content for each field
+  const getImpactContent = (field: string) => {
+    const content = {
+      "Action Oriented": {
+        status: "Good Job!",
+        description: "Your resume demonstrates strong action-oriented language and impactful content.",
+        expandText: "What are Action Oriented Words?"
+      },
+      "Specifics": {
+        status: "On Track!",
+        description: "Your resume includes specific details but could benefit from more quantifiable metrics.",
+        expandText: "How to Add More Specifics?"
+      },
+      "Overusage": {
+        status: "Needs Work!",
+        description: "Some words and phrases are being overused throughout your resume.",
+        expandText: "Common Overused Words to Avoid"
+      },
+      "Avoided Words": {
+        status: "Needs Work!",
+        description: "Your resume contains words that should be avoided or replaced with stronger alternatives.",
+        expandText: "List of Words to Avoid"
+      }
+    };
+    return content[field] || content["Action Oriented"];
+  };
+
+  const getPresentationContent = (field: string) => {
+    const content = {
+      "Number of Pages": {
+        status: "Good Job!",
+        description: "Your resume meets the standard guidelines for the number of pages.",
+        expandText: "Deciding the Length of Resume"
+      },
+      "Overall Format": {
+        status: "Needs Work!",
+        description: "The overall format of your resume needs improvement for better readability.",
+        expandText: "Resume Formatting Best Practices"
+      },
+      "Essential Sections": {
+        status: "Good Job!",
+        description: "Your resume includes all the essential sections required.",
+        expandText: "Must-Have Resume Sections"
+      },
+      "Section Specific": {
+        status: "Needs Work!",
+        description: "Some sections need specific formatting adjustments.",
+        expandText: "Section-Specific Guidelines"
+      },
+      "Spell Check": {
+        status: "Needs Work!",
+        description: "There are spelling and grammar errors that need to be corrected.",
+        expandText: "Common Spelling Mistakes"
+      }
+    };
+    return content[field] || content["Number of Pages"];
+  };
+
+  const getCompetencyContent = (field: string) => {
+    const content = {
+      "Analytical": {
+        status: "Good Job!",
+        description: "You are doing a great job reflecting your analytical skills!",
+        expandText: "What are Analytical Skills?",
+        experiences: ["Application Framework", "Server Design", "Product Control", "Product Strategies", "Web Application", "Wireframing"]
+      },
+      "Communication": {
+        status: "On Track!",
+        description: "Your communication skills are well represented but could be enhanced further.",
+        expandText: "What are Communication Skills?",
+        experiences: ["Presentation Skills", "Team Collaboration", "Client Interaction", "Documentation", "Public Speaking", "Cross-functional Teams"]
+      },
+      "Leadership": {
+        status: "On Track!",
+        description: "Leadership qualities are present but need more prominent examples.",
+        expandText: "What are Leadership Skills?",
+        experiences: ["Project Management", "Team Leading", "Mentoring", "Decision Making", "Strategic Planning", "Conflict Resolution"]
+      },
+      "Teamwork": {
+        status: "On Track!",
+        description: "Teamwork skills are evident but could be strengthened with more examples.",
+        expandText: "What are Teamwork Skills?",
+        experiences: ["Collaborative Projects", "Cross-team Coordination", "Peer Support", "Group Problem Solving", "Shared Responsibilities", "Team Building"]
+      },
+      "Initiative": {
+        status: "Needs Work!",
+        description: "Initiative skills need more representation in your resume.",
+        expandText: "What are Initiative Skills?",
+        experiences: ["Innovation Projects", "Process Improvement", "Self-directed Learning", "Problem Identification", "Proactive Solutions", "New Ideas Implementation"]
+      }
+    };
+    return content[field] || content["Analytical"];
+  };
 
   return (
     <div className="min-h-screen bg-dashboard-bg">
@@ -360,7 +457,13 @@ const DetailedFeedback = () => {
                     {/* Categories Sidebar */}
                     <div className="w-36 space-y-1">
                       {impactMetrics.map((metric, index) => (
-                        <div key={index} className="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-50 rounded">
+                        <div 
+                          key={index} 
+                          className={`flex items-center gap-3 p-2 cursor-pointer rounded ${
+                            selectedImpactField === metric.title ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"
+                          }`}
+                          onClick={() => setSelectedImpactField(metric.title)}
+                        >
                           <div className={`w-8 h-8 ${metric.status === "Good Job!" ? "bg-green-100" : "bg-red-100"} rounded-full flex items-center justify-center`}>
                             {metric.status === "Good Job!" ? 
                               <CheckCircle className="h-4 w-4 text-green-600" /> : 
@@ -375,16 +478,22 @@ const DetailedFeedback = () => {
                     {/* Feedback Content */}
                     <div className="flex-1 bg-white border rounded-lg p-4">
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-800">Action Oriented</h3>
-                        <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
+                        <h3 className="text-lg font-semibold text-gray-800">{selectedImpactField}</h3>
+                        <Badge className={`${
+                          getImpactContent(selectedImpactField).status === "Good Job!" ? "bg-green-100 text-green-700" :
+                          getImpactContent(selectedImpactField).status === "On Track!" ? "bg-orange-100 text-orange-700" :
+                          "bg-red-100 text-red-700"
+                        }`}>
+                          {getImpactContent(selectedImpactField).status}
+                        </Badge>
                       </div>
                       
                       <p className="text-gray-600 mb-6">
-                        Your resume demonstrates strong action-oriented language and impactful content.
+                        {getImpactContent(selectedImpactField).description}
                       </p>
                       
                       <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
-                        <span className="text-sm font-medium text-gray-700">What are Action Oriented Words?</span>
+                        <span className="text-sm font-medium text-gray-700">{getImpactContent(selectedImpactField).expandText}</span>
                         <Plus className="h-4 w-4 text-gray-500" />
                       </div>
                     </div>
@@ -396,7 +505,13 @@ const DetailedFeedback = () => {
                     {/* Categories Sidebar */}
                     <div className="w-36 space-y-1">
                       {presentationMetrics.map((metric, index) => (
-                        <div key={index} className={`flex items-center gap-3 p-2 cursor-pointer rounded ${index === 0 ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"}`}>
+                        <div 
+                          key={index} 
+                          className={`flex items-center gap-3 p-2 cursor-pointer rounded ${
+                            selectedPresentationField === metric.title ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"
+                          }`}
+                          onClick={() => setSelectedPresentationField(metric.title)}
+                        >
                           <div className={`w-8 h-8 ${metric.status === "Good Job!" ? "bg-green-100" : "bg-red-100"} rounded-full flex items-center justify-center`}>
                             {metric.status === "Good Job!" ? 
                               <CheckCircle className="h-4 w-4 text-green-600" /> : 
@@ -411,16 +526,22 @@ const DetailedFeedback = () => {
                     {/* Feedback Content */}
                     <div className="flex-1 bg-white border rounded-lg p-4">
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-800">Number of Pages</h3>
-                        <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
+                        <h3 className="text-lg font-semibold text-gray-800">{selectedPresentationField}</h3>
+                        <Badge className={`${
+                          getPresentationContent(selectedPresentationField).status === "Good Job!" ? "bg-green-100 text-green-700" :
+                          getPresentationContent(selectedPresentationField).status === "On Track!" ? "bg-orange-100 text-orange-700" :
+                          "bg-red-100 text-red-700"
+                        }`}>
+                          {getPresentationContent(selectedPresentationField).status}
+                        </Badge>
                       </div>
                       
                       <p className="text-gray-600 mb-6">
-                        Your resume meets the standard guidelines for the number of pages.
+                        {getPresentationContent(selectedPresentationField).description}
                       </p>
                       
                       <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100">
-                        <span className="text-sm font-medium text-gray-700">Deciding the Length of Resume</span>
+                        <span className="text-sm font-medium text-gray-700">{getPresentationContent(selectedPresentationField).expandText}</span>
                         <Plus className="h-4 w-4 text-gray-500" />
                       </div>
                     </div>
@@ -432,16 +553,29 @@ const DetailedFeedback = () => {
                     {/* Categories Sidebar */}
                     <div className="w-36 space-y-1">
                       {competencyMetrics.map((metric, index) => (
-                        <div key={index} className={`flex items-center gap-3 p-2 cursor-pointer rounded ${index === 0 ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"}`}>
-                          <div className={`w-8 h-8 ${index === 0 ? "bg-green-100" : "bg-orange-100"} rounded-full flex items-center justify-center`}>
-                            {index === 0 ? 
+                        <div 
+                          key={index} 
+                          className={`flex items-center gap-3 p-2 cursor-pointer rounded ${
+                            selectedCompetencyField === metric.title ? "bg-white border-l-4 border-green-500" : "hover:bg-gray-50"
+                          }`}
+                          onClick={() => setSelectedCompetencyField(metric.title)}
+                        >
+                          <div className={`w-8 h-8 ${
+                            metric.status === "Good Job!" ? "bg-green-100" : 
+                            metric.status === "On Track!" ? "bg-orange-100" : "bg-red-100"
+                          } rounded-full flex items-center justify-center`}>
+                            {metric.status === "Good Job!" ? 
                               <CheckCircle className="h-4 w-4 text-green-600" /> : 
-                              <Clock className="h-4 w-4 text-orange-600" />
+                              metric.status === "On Track!" ?
+                              <Clock className="h-4 w-4 text-orange-600" /> :
+                              <AlertCircle className="h-4 w-4 text-red-600" />
                             }
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-sm font-medium text-gray-700">{metric.title}</span>
-                            {index !== 0 && <Clock className="h-3 w-3 text-orange-500" />}
+                            {metric.status !== "Good Job!" && (
+                              <Clock className="h-3 w-3 text-orange-500" />
+                            )}
                           </div>
                         </div>
                       ))}
@@ -451,28 +585,33 @@ const DetailedFeedback = () => {
                     <div className="flex-1 bg-white border rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-4">
                         <ChevronLeft className="h-4 w-4 text-gray-400" />
-                        <h3 className="text-lg font-semibold text-gray-800">Analytical Skills</h3>
-                        <Badge className="bg-green-100 text-green-700">Good Job!</Badge>
+                        <h3 className="text-lg font-semibold text-gray-800">{selectedCompetencyField} Skills</h3>
+                        <Badge className={`${
+                          getCompetencyContent(selectedCompetencyField).status === "Good Job!" ? "bg-green-100 text-green-700" :
+                          getCompetencyContent(selectedCompetencyField).status === "On Track!" ? "bg-orange-100 text-orange-700" :
+                          "bg-red-100 text-red-700"
+                        }`}>
+                          {getCompetencyContent(selectedCompetencyField).status}
+                        </Badge>
                       </div>
                       
                       <p className="text-gray-600 mb-6">
-                        You are doing a great job reflecting your analytical skills!
+                        {getCompetencyContent(selectedCompetencyField).description}
                       </p>
                       
                       <div className="bg-gray-50 border rounded-lg p-3 flex items-center justify-between cursor-pointer hover:bg-gray-100 mb-6">
-                        <span className="text-sm font-medium text-gray-700">What are Analytical Skills?</span>
+                        <span className="text-sm font-medium text-gray-700">{getCompetencyContent(selectedCompetencyField).expandText}</span>
                         <Plus className="h-4 w-4 text-gray-500" />
                       </div>
 
                       <div>
                         <h4 className="text-sm font-semibold text-gray-800 mb-3">Experiences you can consider</h4>
                         <div className="flex flex-wrap gap-2">
-                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Application Framework</span>
-                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Server Design</span>
-                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Product Control</span>
-                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Product Strategies</span>
-                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Web Application</span>
-                          <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">Wireframing</span>
+                          {getCompetencyContent(selectedCompetencyField).experiences?.map((experience, index) => (
+                            <span key={index} className="px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded">
+                              {experience}
+                            </span>
+                          ))}
                         </div>
                       </div>
                     </div>
