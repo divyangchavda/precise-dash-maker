@@ -354,14 +354,28 @@ const DetailedFeedback = () => {
 
                     <div className="space-y-3">
                       {impactMetrics.map((metric, index) => (
-                        <div key={index} className="flex items-center justify-between">
+                        <div 
+                          key={index} 
+                          className="flex items-center justify-between p-2 rounded-lg transition-all duration-300 hover:bg-muted/30 hover:scale-105 hover:shadow-sm group cursor-pointer"
+                          style={{
+                            transform: 'perspective(1000px) rotateX(0deg)',
+                            transformStyle: 'preserve-3d',
+                            transition: 'transform 0.3s ease-in-out'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateX(15deg) rotateY(5deg)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                          }}
+                        >
                           <div className="flex items-center space-x-2">
-                            <metric.icon className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-sm text-foreground">{metric.title}</span>
+                            <metric.icon className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                            <span className="text-sm text-foreground group-hover:font-medium transition-all duration-300">{metric.title}</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             {getStatusIcon(metric.status)}
-                            <span className={`text-xs ${getStatusColor(metric.status)}`}>
+                            <span className={`text-xs ${getStatusColor(metric.status)} group-hover:font-semibold transition-all duration-300`}>
                               {metric.status}
                             </span>
                           </div>
@@ -387,14 +401,28 @@ const DetailedFeedback = () => {
 
                     <div className="space-y-3">
                       {presentationMetrics.map((metric, index) => (
-                        <div key={index} className="flex items-center justify-between">
+                        <div 
+                          key={index} 
+                          className="flex items-center justify-between p-2 rounded-lg transition-all duration-300 hover:bg-muted/30 hover:scale-105 hover:shadow-sm group cursor-pointer"
+                          style={{
+                            transform: 'perspective(1000px) rotateX(0deg)',
+                            transformStyle: 'preserve-3d',
+                            transition: 'transform 0.3s ease-in-out'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateX(15deg) rotateY(5deg)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                          }}
+                        >
                           <div className="flex items-center space-x-2">
-                            <metric.icon className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-sm text-foreground">{metric.title}</span>
+                            <metric.icon className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                            <span className="text-sm text-foreground group-hover:font-medium transition-all duration-300">{metric.title}</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             {getStatusIcon(metric.status)}
-                            <span className={`text-xs ${getStatusColor(metric.status)}`}>
+                            <span className={`text-xs ${getStatusColor(metric.status)} group-hover:font-semibold transition-all duration-300`}>
                               {metric.status}
                             </span>
                           </div>
@@ -420,14 +448,28 @@ const DetailedFeedback = () => {
 
                     <div className="space-y-3">
                       {competencyMetrics.map((metric, index) => (
-                        <div key={index} className="flex items-center justify-between">
+                        <div 
+                          key={index} 
+                          className="flex items-center justify-between p-2 rounded-lg transition-all duration-300 hover:bg-muted/30 hover:scale-105 hover:shadow-sm group cursor-pointer"
+                          style={{
+                            transform: 'perspective(1000px) rotateX(0deg)',
+                            transformStyle: 'preserve-3d',
+                            transition: 'transform 0.3s ease-in-out'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateX(15deg) rotateY(5deg)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                          }}
+                        >
                           <div className="flex items-center space-x-2">
-                            <metric.icon className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-sm text-foreground">{metric.title}</span>
+                            <metric.icon className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                            <span className="text-sm text-foreground group-hover:font-medium transition-all duration-300">{metric.title}</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             {getStatusIcon(metric.status)}
-                            <span className={`text-xs ${getStatusColor(metric.status)}`}>
+                            <span className={`text-xs ${getStatusColor(metric.status)} group-hover:font-semibold transition-all duration-300`}>
                               {metric.status}
                             </span>
                           </div>
