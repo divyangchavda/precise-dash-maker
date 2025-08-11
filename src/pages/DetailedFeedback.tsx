@@ -636,92 +636,90 @@ const DetailedFeedback = () => {
               {/* Right 50% - Resume Preview */}
               <div className="w-1/2 pl-3">
                 <div className="bg-white border rounded-lg h-full p-6 overflow-y-auto">
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm">i</span>
-                    </div>
-                    <h2 className="text-xl font-bold text-gray-900">{resumeData?.name || "Divyang Jitendrabhai Chavda"}</h2>
-                  </div>
-
-                  <p className="text-gray-700 text-sm mb-4 leading-relaxed">
-                    Passionate tech enthusiast with a strong background in software development, website development, and 
-                    AI-powered tools. Skilled in developing robust web platforms and solving real-world problems using open-source 
-                    and cloud technologies. Always eager to learn, experiment, and stay ahead in the evolving tech landscape.
-                  </p>
-
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
-                    <div className="flex items-center gap-1">
-                      <Mail className="h-4 w-4 text-blue-500" />
-                      <span>chavdadivyang7373@gmail.com</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Phone className="h-4 w-4 text-blue-500" />
-                      <span>+91 9687131427</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4 text-blue-500" />
-                      <span>Pune</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Globe className="h-4 w-4 text-blue-500" />
-                      <span>divyangchavda</span>
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <h3 className="text-blue-500 font-semibold text-sm mb-3 border-b border-gray-200 pb-1">WORK EXPERIENCE</h3>
-                    
-                    <div className="mb-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="font-semibold text-gray-900">Sumago Infotech Pvt. Ltd.</h4>
-                          <p className="text-gray-700">Software Engineer Trainee</p>
+                  {resumeData?.profile ? (
+                    <>
+                      <div className="flex items-center gap-2 mb-6">
+                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                          <span className="text-white text-sm font-bold">{resumeData.profile.name.charAt(0)}</span>
                         </div>
-                        <span className="text-gray-600 text-sm">Sep,2024 - March,2025</span>
+                        <h2 className="text-xl font-bold text-gray-900">{resumeData.profile.name}</h2>
                       </div>
-                      
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>Focused on full-stack development using the MERN stack, including frontend interfaces with React.js and backend services with Node.js and Express.</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>Gained hands-on experience in designing RESTful APIs, integrating MongoDB databases, and deploying applications on cloud platforms.</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>Implemented features like user authentication, role-based access, and responsive UI components aligned with modern development standards.</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <Clock className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
-                          <span><span className="bg-orange-100 px-1">Followed</span> Agile methodologies for planning and task management, ensuring consistent progress and code quality throughout the internship.</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
 
-                  <div>
-                    <h3 className="text-blue-500 font-semibold text-sm mb-3 border-b border-gray-200 pb-1">EDUCATION</h3>
-                    
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-semibold text-gray-900">Sri Balaji University, Pune.</h4>
-                          <p className="text-gray-700 text-sm">Master of Computer Application(MCA) – 8.29 CGPA</p>
+                      <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                        {resumeData.profile.summary}
+                      </p>
+
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+                        <div className="flex items-center gap-1">
+                          <Mail className="h-4 w-4 text-primary" />
+                          <span>{resumeData.profile.email}</span>
                         </div>
-                        <span className="text-gray-600 text-sm">July,2023 - May,2025</span>
+                        <div className="flex items-center gap-1">
+                          <Phone className="h-4 w-4 text-primary" />
+                          <span>{resumeData.profile.phone}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          <span>{resumeData.profile.location}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Globe className="h-4 w-4 text-primary" />
+                          <span>{resumeData.profile.website}</span>
+                        </div>
                       </div>
-                      
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-semibold text-gray-900">Bhagwan Mahavir University, Surat.</h4>
-                          <p className="text-gray-700 text-sm">Bachelor of Computer Application(BCA) - 8.08 CGPA</p>
+
+                      <div className="mb-6">
+                        <h3 className="text-primary font-semibold text-sm mb-3 border-b border-gray-200 pb-1">WORK EXPERIENCE</h3>
+                        
+                        <div className="space-y-4">
+                          {resumeData.profile.workExperience.map((job, index) => (
+                            <div key={index} className="mb-4">
+                              <div className="flex justify-between items-start mb-2">
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">{job.company}</h4>
+                                  <p className="text-gray-700">{job.position}</p>
+                                </div>
+                                <span className="text-gray-600 text-sm">{job.duration}</span>
+                              </div>
+                              
+                              <ul className="space-y-2 text-sm text-gray-700">
+                                {job.bullets.map((bullet, bulletIndex) => (
+                                  <li key={bulletIndex} className="flex items-start gap-2">
+                                    <CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                                    <span>{bullet}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
                         </div>
-                        <span className="text-gray-600 text-sm">August,2020 - June 2023</span>
+                      </div>
+
+                      <div>
+                        <h3 className="text-primary font-semibold text-sm mb-3 border-b border-gray-200 pb-1">EDUCATION</h3>
+                        
+                        <div className="space-y-3">
+                          {resumeData.profile.education.map((edu, index) => (
+                            <div key={index} className="flex justify-between items-start">
+                              <div>
+                                <h4 className="font-semibold text-gray-900">{edu.institution}</h4>
+                                <p className="text-gray-700 text-sm">{edu.degree} - {edu.gpa}</p>
+                              </div>
+                              <span className="text-gray-600 text-sm">{edu.duration}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-center">
+                      <div>
+                        <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-foreground mb-2">No Resume Uploaded</h3>
+                        <p className="text-muted-foreground">Upload a resume to see the preview here</p>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
